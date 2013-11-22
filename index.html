@@ -11,6 +11,12 @@
   	<script src='assets/js/jquery.js'></script>
   	<script src='assets/js/bootstrap.min.js'></script>
     <script>
+      function initialize()
+      {
+        document.getElementById('optionsRadios1').checked="checked";
+        document.getElementById('optionsRadios2').checked="";
+      }
+
       function toggleUI()
       {
         if(document.getElementById('optionsRadios1').checked)
@@ -42,7 +48,7 @@
       }
     </script>
   </head>
-  <body style="background-color:#0077bb;">
+  <body style="background-color:#0077bb;" onload="initialize();">
     
     <!-- Navbar -->
     <nav class="navbar navbar-default" role="navigation">

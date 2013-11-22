@@ -35,9 +35,14 @@
           }
           return true;
       }
+
+      function bringUpAboutModal()
+      {
+        $('#aboutModal').modal('toggle');
+      }
     </script>
   </head>
-  <body style="background-color:#2277bb;">
+  <body style="background-color:#0077bb;">
     
     <!-- Navbar -->
     <nav class="navbar navbar-default" role="navigation">
@@ -61,11 +66,33 @@
     </nav>
     <!-- End of Navbar -->
 
+    <!-- About Modal -->
+    <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h2 class="modal-title">About</h2>
+          </div>
+          <div class="modal-body">
+            <p> A project to obtain EEG signals from a neuroheadset and process the subsequent data produced for classification of objects. </p>            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of About Modal -->
+
+    <!-- Jumbotron -->
     <div class='jumbotron'>
       <h1>EEG based BCI <br><small><br>A Brain Computer Interface utilizing EEG signals from a neuroheadset</small></h1>
-      <button class='btn btn-danger'><span class='glyphicon glyphicon-save'></span> Download Source</button>
-      <button class='btn btn-info'><span class='glyphicon glyphicon-info-sign'></span> About</button>
+      <a class='btn btn-primary' href='code.zip'><span class='glyphicon glyphicon-save'></span> Download Source</a>
+      <button class='btn btn-info' onclick='bringUpAboutModal();'><span class='glyphicon glyphicon-info-sign'></span> About</button>
     </div>
+    <!-- End of Jumbotron -->
+
     <div class='well container' align='center'>
     <form>
       <table class='table' style='width:80%;'>

@@ -125,12 +125,12 @@ void writeToFile(float **a, int row, int col, char * filename, char classLabel[]
 			if(j != col - 1)
 				fout<<",";
 		}
-		if(!strcmp(classLabel,"$~DELIM~$"))
-			fout<<endl;
-		else
+		if(strcmp(classLabel,"$~DELIM~$"))
 		{
-			fout<<"|"<<classLabel<<endl;
+			fout<<"|"<<classLabel;
 		}
+		if(i != row - 1)
+			fout<<endl;
 	}
 	fout.close();
 }

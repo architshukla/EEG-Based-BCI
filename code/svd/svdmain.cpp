@@ -2,7 +2,9 @@
 #include<fstream>
 #include<vector>
 #include<string.h>
+#include<stdlib.h>
 #include"svd.c"
+
 using namespace std;
 
 int row, col;
@@ -44,7 +46,7 @@ void readFromFile(char *filename)
 	   Input:
 		filename: path to the file which contains the matrix */
 	size_t len;
-	char *line = NULL;
+	char line[200];
 	string str();
 	vector<string> numbers;
 	int r = 0,c = 0;
@@ -56,8 +58,9 @@ void readFromFile(char *filename)
 		cout<<"Error\n";
 		return;
 	}
-	while(getline(&line, &len, fp) != -1)
+	while(!feof(fp))
 	{
+		fgets(line,200,fp);
 		r++;
 		c = 0;
 		int startpos = 0;
@@ -86,8 +89,6 @@ void readFromFile(char *filename)
 			tempstr += line[j];
 		}
 		numbers.push_back(tempstr);
-		free(line);
-		line = NULL;
 	}
 
 	a = (float **) malloc(r * sizeof(float*));
@@ -125,12 +126,12 @@ void writeToFile(float **a, int row, int col, char * filename, char classLabel[]
 			if(j != col - 1)
 				fout<<",";
 		}
-		if(!strcmp(classLabel,"$~DELIM~$"))
-			fout<<endl;
-		else
+		if(strcmp(classLabel,"$~DELIM~$"))
 		{
-			fout<<"|"<<classLabel<<endl;
+			fout<<"|"<<classLabel;
 		}
+		if(i != row - 1)
+			fout<<endl;
 	}
 	fout.close();
 }
@@ -196,7 +197,7 @@ void sortSigmaValues(float **u, float *w, float **v, int row, int col)
 				w[i] = w[j];
 				w[j] = temp;
 				swapColumns(u, i, j, row, col);
-				swapColumns(v, i, j, row, col);
+				swapColumns(v, i, j, col, col);
 			}
 		}
 	}
@@ -207,7 +208,6 @@ int main(int argc, char **argv)
 {
 	int i,j,k;
 	char inputfilename[] = "sampleinput.txt";
-
 	if(argc < 3)
 	{
 		printf("USAGE: ./svd inputFile OutputFile [classLabel]\n");
@@ -243,7 +243,7 @@ int main(int argc, char **argv)
 	// Sort the sigma values in decreasing order
 	sortSigmaValues(a, w, v, row, col);
 
-	// Perform principal component ananlysis
+	// Perform principal component analysis
 	PCA(w, col);
 
 	// Perform first multiplication u.v

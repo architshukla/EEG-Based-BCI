@@ -20,12 +20,20 @@ for trainLine in trainFile:
 	numbers = parts[0].split(",")
 	X.append(numbers)
 
-# print("\nY is "+str(y))
-# print("\nX is "+str(X))
+trainFile.close()
 
 neigh.fit(X,y)
 
+classesPredicted={}
+
 for testLine in testFile:
 	testValues = testLine.split(",")
-	print("\nPREDICTION: ")
-	print(neigh.predict(testValues))
+	predictedValue = neigh.predict(testValues)
+	if(predictedValue[0] not in classesPredicted):
+		classesPredicted[predictedValue[0]] = 1;
+	else:
+		classesPredicted[predictedValue[0]] += 1;
+
+print("\nClassification: "+str(classesPredicted))
+
+testFile.close()

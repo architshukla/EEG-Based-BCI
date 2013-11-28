@@ -1,10 +1,13 @@
 import sys
 import os
 
+os.system("dataExtraction\\dataExtraction.exe dataExtraction\\output.txt")
+
 if(len(sys.argv)>1):
 	# Class label is provided
 	# Perform singular value decomposition on the data
-	os.system("svd\\svd.exe svd\\sampleinput.txt svd\\sampleoutput.txt "+sys.argv[1])
+	## os.system("svd\\svd.exe svd\\sampleinput.txt svd\\sampleoutput.txt "+sys.argv[1])
+	os.system("svd\\svd.exe dataExtraction\\output.txt svd\\sampleoutput.txt "+sys.argv[1])
 
 	# Open training Data Set file and create it if it does not exist
 	if(os.path.exists("temp\\trainingDataset.txt")):
@@ -24,6 +27,7 @@ if(len(sys.argv)>1):
 	svdOutputFile.close()
 else:
 	# No class label is provided
+	os.system("svd\\svd.exe dataExtraction\\output.txt svd\\sampleoutput.txt ")
 	# Check if the training data set exists
 	if(not os.path.exists("temp\\trainingDataset.txt")):
 		# Training data set dies not exist, exit
@@ -31,4 +35,4 @@ else:
 		exit()
 
 	# Classify the test data
-	os.system("C:\\Python27\\python classification\\nearestNeighbour.py temp\\trainingDataset.txt classification\\sampleTest2.txt")
+	os.system("C:\\Python27\\python classification\\nearestNeighbour.py temp\\trainingDataset.txt svd\\sampleoutput.txt")

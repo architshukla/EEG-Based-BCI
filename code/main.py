@@ -1,12 +1,13 @@
 import sys
 import os
 
+# Extract data from the headset
 os.system("dataExtraction\\dataExtraction.exe dataExtraction\\output.txt")
 
 if(len(sys.argv)>1):
 	# Class label is provided
+
 	# Perform singular value decomposition on the data
-	## os.system("svd\\svd.exe svd\\sampleinput.txt svd\\sampleoutput.txt "+sys.argv[1])
 	os.system("svd\\svd.exe dataExtraction\\output.txt svd\\sampleoutput.txt "+sys.argv[1])
 
 	# Open training Data Set file and create it if it does not exist
@@ -22,12 +23,16 @@ if(len(sys.argv)>1):
 	# Append SVD lines to Data Set
 	for svdLine in svdOutputFile:
 		trainingDatasetFile.write(svdLine)
-	# CLose file handles
+	
+	# Close file handles
 	trainingDatasetFile.close()
 	svdOutputFile.close()
 else:
 	# No class label is provided
+
+	# Perform singular value decomposition on the data
 	os.system("svd\\svd.exe dataExtraction\\output.txt svd\\sampleoutput.txt ")
+
 	# Check if the training data set exists
 	if(not os.path.exists("temp\\trainingDataset.txt")):
 		# Training data set dies not exist, exit

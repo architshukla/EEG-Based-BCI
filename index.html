@@ -11,6 +11,7 @@
   	<script src='assets/js/jquery.js'></script>
   	<script src='assets/js/bootstrap.min.js'></script>
     <script>
+      var train = 1;
       function initialize()
       {
         document.getElementById('optionsRadios1').checked="checked";
@@ -23,11 +24,13 @@
         {
           document.getElementById('classLabelDiv').style.display="";
           document.getElementById('submitButton').innerHTML='Begin Training';
+          train = 1;
         }
         else
         {
           document.getElementById('classLabelDiv').style.display="none";
-          document.getElementById('submitButton').innerHTML='Begin the Test';
+          document.getElementById('submitButton').value='Begin the Test';
+          train = 0;
         }
       }
 
@@ -45,6 +48,32 @@
       function bringUpAboutModal()
       {
         $('#aboutModal').modal('toggle');
+      }
+
+      function callScripts()
+      {
+        if(validate() == false)
+          return false;
+        if(train)
+        {
+          var value = document.getElementById('classLabel').value;
+          $.post("callScripts.php", { label : value } )
+            .done(function(data)
+            {
+            // if(data!="")
+            //   alert("Error: "+data);
+            });
+        }
+        else
+        {
+          $.post("callScripts.php", {} )
+            .done(function(data)
+            {
+            // if(data!="")
+            //   alert("Error: "+data);
+            });
+        }
+        
       }
     </script>
   </head>
@@ -100,7 +129,7 @@
     <!-- End of Jumbotron -->
 
     <div class='well container' align='center'>
-    <form>
+    <form onsubmit="return false;">
       <table class='table' style='width:80%;'>
         <tr>
           <td align='center'>
@@ -130,7 +159,7 @@
         <input type='text' style='width:50%;' class='form-control' id='classLabel' name='classLabel' autofocus>
       </div>
       <hr>
-      <button class='btn btn-success btn-lg btn-block' id='submitButton' style='width:50%' onclick='validate();'> Begin Training </button>
+      <input type='button' class='btn btn-success btn-lg btn-block' id='submitButton' style='width:50%' value='Begin Training' onclick="callScripts();">
     </form>
   </device-widthv>
   </body>

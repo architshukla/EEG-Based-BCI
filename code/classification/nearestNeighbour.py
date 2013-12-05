@@ -1,11 +1,12 @@
 import sys
+import speech
 
 if(len(sys.argv)<3):
 	print("USAGE: nearestNeighbour.py TraingDataFile TestDataFile")
 	exit()
 
 from sklearn.neighbors import KNeighborsClassifier
-neigh = KNeighborsClassifier(5,"distance")
+neigh = KNeighborsClassifier(20,"distance")
 
 trainFile = open(sys.argv[1])
 testFile = open(sys.argv[2])
@@ -35,5 +36,15 @@ for testLine in testFile:
 		classesPredicted[predictedValue[0]] += 1;
 
 print("\nClassification: "+str(classesPredicted))
+
+maxKey = classesPredicted.keys()[0]
+
+for eachClass in classesPredicted:
+	if(classesPredicted[maxKey] < classesPredicted[eachClass]):
+		maxKey = eachClass
+
+print("The object is: "+str(maxKey))
+
+speech.say("You are looking at a "+str(maxKey))
 
 testFile.close()

@@ -2,10 +2,12 @@ import sys
 import os
 
 # Extract data from the headset
-os.system("dataExtraction\\dataExtraction.exe dataExtraction\\output.txt")
+#os.system("dataExtraction\\dataExtraction.exe dataExtraction\\output.txt")
 
 if(len(sys.argv)>1):
 	# Class label is provided
+
+	print("Performing SVD and PCA...")
 
 	# Perform singular value decomposition on the data
 	os.system("svd\\svd.exe dataExtraction\\output.txt svd\\sampleoutput.txt "+sys.argv[1])
@@ -30,6 +32,8 @@ if(len(sys.argv)>1):
 else:
 	# No class label is provided
 
+	print("Performing SVD and PCA...")
+
 	# Perform singular value decomposition on the data
 	os.system("svd\\svd.exe dataExtraction\\output.txt svd\\sampleoutput.txt ")
 
@@ -38,6 +42,8 @@ else:
 		# Training data set dies not exist, exit
 		print("Training data set not found. Exiting")
 		exit()
+
+	print("Classifying...")
 
 	# Classify the test data
 	os.system("C:\\Python27\\python classification\\nearestNeighbour.py temp\\trainingDataset.txt svd\\sampleoutput.txt")

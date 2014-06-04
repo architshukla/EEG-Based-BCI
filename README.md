@@ -15,7 +15,7 @@ There are two kinds of use cases involving these:
 1. Training the model involves employing the first two steps with known, labeled data
 2. Classification involves using all the three steps including the training data produced from step 1
 
-### Convertig EEG signals to values
+### Converting EEG signals to values
 This step is accomplished using an example application in the Emotiv SDK implemented in C++. The code was modified slightly to collect readings for about 10 seconds and write them to a file. The values are space separated.
 
 ### Singular Value Decomposition
